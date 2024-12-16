@@ -7,19 +7,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.feature_home.data.dto.CatsFactDto
 import com.example.feature_home.data.dto.DogsFactDto
 import com.example.feature_home.databinding.FragmentFactsBinding
-import com.example.feature_home.di.FeatureHomeDependenciesProvider
+import com.example.feature_home.di.FeatureHomeComponent
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class FactsFragment : Fragment() {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: FactsViewModelFactory
 
     private val viewModel: FactsViewModel by viewModels { viewModelFactory }
 
@@ -28,7 +27,7 @@ class FactsFragment : Fragment() {
         get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (requireActivity().application as FeatureHomeDependenciesProvider).getFeatureHomeComponent().inject(this)
+        FeatureHomeComponent.init(requireContext().applicationContext).inject(this)
         super.onCreate(savedInstanceState)
     }
 
