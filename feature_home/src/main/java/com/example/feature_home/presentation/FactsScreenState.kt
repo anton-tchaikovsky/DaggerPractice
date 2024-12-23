@@ -5,8 +5,8 @@ import com.example.feature_home.data.dto.DogsFactDto
 
 internal sealed interface FactsScreenState {
     class SuccessFact(
-        val factsCat: CatsFactDto? = null,
-        val factsDog: DogsFactDto? = null
+        val factsCat: CatsFactDto,
+        val factsDog: DogsFactDto
     ) : FactsScreenState
 
     class Error(val error: String) : FactsScreenState

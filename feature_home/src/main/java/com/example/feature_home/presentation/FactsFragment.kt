@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.feature_home.R
 import com.example.feature_home.data.dto.CatsFactDto
 import com.example.feature_home.data.dto.DogsFactDto
 import com.example.feature_home.databinding.FragmentFactsBinding
@@ -18,9 +19,14 @@ import javax.inject.Inject
 class FactsFragment : Fragment() {
 
     @Inject
-    lateinit var viewModelFactory: FactsViewModelFactory
+    lateinit var viewModelFactory: FactsViewModelFactory.Factory
 
-    private val viewModel: FactsViewModel by viewModels { viewModelFactory }
+    private val viewModel: FactsViewModel by viewModels {
+        viewModelFactory.create(
+            getDefaultCatsFact(),
+            getDefaultDogsFact()
+        )
+    }
 
     private var _binding: FragmentFactsBinding? = null
     private val binding: FragmentFactsBinding
@@ -78,13 +84,17 @@ class FactsFragment : Fragment() {
         binding.loadingProgressBar.visibility = View.VISIBLE
     }
 
-    private fun showFact(catsFact: CatsFactDto?, dogsFact: DogsFactDto?) {
-        with(binding){
+    private fun showFact(catsFact: CatsFactDto, dogsFact: DogsFactDto) {
+        with(binding) {
             loadingProgressBar.visibility = View.INVISIBLE
-            catsFact?.let { catsFactTextView.text = it.fact }
-            dogsFact?.let { dogsFactTextView.text = it.fact }
+            catsFactTextView.text = catsFact.fact
+            dogsFactTextView.text = dogsFact.fact
         }
     }
+
+    private fun getDefaultCatsFact() = CatsFactDto(getString(R.string.cat))
+
+    private fun getDefaultDogsFact() = DogsFactDto(getString(R.string.dog))
 
     companion object {
         @JvmStatic
