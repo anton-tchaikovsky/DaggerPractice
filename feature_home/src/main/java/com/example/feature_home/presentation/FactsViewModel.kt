@@ -7,23 +7,32 @@ import com.example.feature_home.data.dto.CatsFactDto
 import com.example.feature_home.data.dto.DogsFactDto
 import com.example.feature_home.di.FeatureHomeComponent
 import com.example.feature_home.domain.FactsRepository
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-class FactsViewModel @Inject constructor(private val repository: FactsRepository) : ViewModel() {
+class FactsViewModel @AssistedInject constructor(
+    private val repository: FactsRepository,
+    @Assisted
+    private var catsFact: CatsFactDto,
+    @Assisted
+    private var dogsFact: DogsFactDto
+) : ViewModel() {
 
     init {
         Log.d("@@@", "initViewModel")
     }
 
-    private var catsFact: CatsFactDto? = null
-
-    private var dogsFact: DogsFactDto? = null
+    @AssistedFactory
+    interface Factory{
+        fun create(catsFact: CatsFactDto, dogsFact: DogsFactDto): FactsViewModel
+    }
 
     private val _factsStateScreen =
-        MutableStateFlow<FactsScreenState>(FactsScreenState.SuccessFact())
+        MutableStateFlow<FactsScreenState>(FactsScreenState.SuccessFact(catsFact, dogsFact))
 
     internal val factsScreenState: StateFlow<FactsScreenState>
         get() = _factsStateScreen
