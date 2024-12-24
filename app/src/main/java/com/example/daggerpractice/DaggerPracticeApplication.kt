@@ -16,7 +16,7 @@ class DaggerPracticeApplication : Application(), FeatureHomeDependenciesProvider
     override fun onCreate() {
         super.onCreate()
         val coreComponent = DaggerCoreComponent.create()
-       appComponent = DaggerAppComponent.builder().coreDependenciesApi(coreComponent).build()
+       appComponent = DaggerAppComponent.builder().coreDependenciesApi(coreComponent).applicationContext(this).build()
     }
 
     override fun getRetrofit(): Map<String, Retrofit> = appComponent.getRetrofit()
