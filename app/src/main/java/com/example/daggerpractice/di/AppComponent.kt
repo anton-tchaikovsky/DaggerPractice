@@ -2,12 +2,14 @@ package com.example.daggerpractice.di
 
 import android.content.Context
 import com.example.core.di.dependencies.CoreDependenciesApi
+import com.example.daggerpractice.DaggerPracticeApplication
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
+
 @Singleton
-@Component(
+@Component(modules = [AppModule::class],
     dependencies = [CoreDependenciesApi::class]
 )
 interface AppComponent: CoreDependenciesApi {
@@ -21,4 +23,6 @@ interface AppComponent: CoreDependenciesApi {
 
         fun build(): AppComponent
     }
+
+    fun inject(app: DaggerPracticeApplication)
 }

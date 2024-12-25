@@ -7,7 +7,6 @@ import dagger.Module
 
 @Module(includes = [FactsDataSourceModule::class])
 interface FactsRepositoryModule {
-    @FeatureHomeScope
     @Binds
     fun bindRepository(repositoryImpl: FactsRepositoryImpl): FactsRepository
 }

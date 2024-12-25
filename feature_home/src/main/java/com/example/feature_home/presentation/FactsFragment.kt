@@ -1,5 +1,6 @@
 package com.example.feature_home.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +13,7 @@ import com.example.feature_home.R
 import com.example.feature_home.data.dto.CatsFactDto
 import com.example.feature_home.data.dto.DogsFactDto
 import com.example.feature_home.databinding.FragmentFactsBinding
-import com.example.feature_home.di.FeatureHomeComponent
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,9 +33,9 @@ class FactsFragment : Fragment() {
     private val binding: FragmentFactsBinding
         get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        FeatureHomeComponent.init(requireContext().applicationContext).inject(this)
-        super.onCreate(savedInstanceState)
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreateView(

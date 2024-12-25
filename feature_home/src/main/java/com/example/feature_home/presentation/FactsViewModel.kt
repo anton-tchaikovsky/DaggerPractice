@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.feature_home.data.dto.CatsFactDto
 import com.example.feature_home.data.dto.DogsFactDto
-import com.example.feature_home.di.FeatureHomeComponent
 import com.example.feature_home.domain.FactsRepository
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -36,11 +35,6 @@ class FactsViewModel @AssistedInject constructor(
 
     internal val factsScreenState: StateFlow<FactsScreenState>
         get() = _factsStateScreen
-
-    override fun onCleared() {
-        FeatureHomeComponent.clearComponent()
-        super.onCleared()
-    }
 
     fun onCatsFactRequest() {
         _factsStateScreen.value = FactsScreenState.Loading
