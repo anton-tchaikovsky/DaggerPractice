@@ -5,5 +5,5 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component (modules = [RetrofitModule::class])
+@Component (modules = [RetrofitModule::class, OkHttpModule::class])
 interface CoreComponent: CoreDependenciesApi

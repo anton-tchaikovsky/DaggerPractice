@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap
 import dagger.multibindings.StringKey
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -19,23 +20,26 @@ interface RetrofitModule {
     companion object {
         @Singleton
         @Provides
-        fun provideLogger(): Logger = object : Logger{}
+        fun provideLogger(): Logger = object : Logger {}
 
         @Singleton
         @Provides
         @IntoMap
         @StringKey(CATS_FACT_API_STRING_KEY)
-        fun provideCatRetrofit(): Retrofit = Retrofit.Builder()
-            .baseUrl("https://catfact.ninja")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        fun provideCatRetrofit(@SimpleOkHttpClient client: OkHttpClient): Retrofit =
+            Retrofit.Builder()
+                .baseUrl("https://catfact.ninja")
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
 
         @Singleton
         @Provides
         @IntoMap
         @StringKey(DOGS_FACT_API_STRING_KEY)
-        fun provideDogRetrofit(): Retrofit = Retrofit.Builder()
+        fun provideDogRetrofit(@LoggingOkHttpClient client: OkHttpClient): Retrofit = Retrofit.Builder()
             .baseUrl("https://dogapi.dog")
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
