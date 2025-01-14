@@ -7,15 +7,19 @@ import com.example.core.data_entity.CatsFact
 import com.example.core.data_entity.DogsFact
 import com.example.core.di.CATS_FACT_API_STRING_KEY
 import com.example.core.di.DOGS_FACT_API_STRING_KEY
+import com.example.core.logger.Logger
 import retrofit2.Retrofit
+import java.util.Optional
 import javax.inject.Inject
 
 
-class FactsRemoteDataSourceImpl @Inject constructor(private val retrofit: Map<String, Retrofit>):
+class FactsRemoteDataSourceImpl @Inject constructor(private val retrofit: Map<String, Retrofit>, logger: Optional<Logger>):
     FactsRemoteDataSource {
 
     init {
         Log.d("@@@", "initDataSource")
+        Log.d ("@@@", "Logger isPresent: ${logger.isPresent}")
+
     }
 
     override suspend fun getCatsFact(): CatsFact =

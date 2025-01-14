@@ -7,7 +7,6 @@ import dagger.Module
 
 @Module
 interface FactsDataSourceModule {
-    @FeatureHomeScope
     @Binds
     fun bindRemoteDataSource(dataSource: FactsRemoteDataSourceImpl): FactsRemoteDataSource
 }
